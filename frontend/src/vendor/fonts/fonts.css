@@ -1,0 +1,16 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap"); */
+@font-face {
+  src: url("./Inter/Inter-Regular.woff2") format("woff2");
+  font-family: "Inter";
+  font-weight: 400;
+}
+@font-face {
+  src: url("./Inter/Inter-Medium.woff2") format("woff2");
+  font-family: "Inter";
+  font-weight: 500;
+}
+@font-face {
+  src: url("./Inter/Inter-Black.woff2") format("woff2");
+  font-family: "Inter";
+  font-weight: 900;
+}
