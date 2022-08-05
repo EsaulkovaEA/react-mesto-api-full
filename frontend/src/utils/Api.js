@@ -127,15 +127,15 @@ class Api {
   }
 }
 const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-40",
+  url: "https://api.esaulkovaea.nomoredomains.xyz",
   headers: {
-    Authorization: "ec3562dc-38d6-49a4-b958-d2cdacbbc00f",
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
 });
 
 const auth = new Api({
-  url: "https://auth.nomoreparties.co",
+  url: "https://api.esaulkovaea.nomoredomains.xyz",
   headers: {
     "Content-Type": "application/json",
   },
