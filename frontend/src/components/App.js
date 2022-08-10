@@ -101,7 +101,6 @@ function App() {
       .then((data) => {
         setCurrentUser(data);
         console.log(data);
-        debugger;
         closeAllPopups();
       })
       .catch((err) => {

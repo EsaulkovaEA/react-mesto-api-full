@@ -116,6 +116,7 @@ class Api {
   }
 
   checkToken(jwt) {
+    if (jwt){
     return fetch(`${this._url}/users/me`, {
       method: "GET",
       headers: {
@@ -126,10 +127,11 @@ class Api {
     }).then(this._checkResponse);
   }
 }
+}
 const api = new Api({
   url: "https://esaulkovaea.nomoredomains.sbs",
   headers: {
-    authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
 });
