@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const { errors, celebrate, Joi } = require('celebrate');
+const cors = require('cors');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 
@@ -13,7 +14,7 @@ const NotFoundError = require('./error/NotFoundError');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const DEFAULT_ALLOWED_METHODS = "GET,HEAD,PUT,PATCH,POST,DELETE";
+// const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 const { PORT = 3000 } = process.env;
 
@@ -22,17 +23,25 @@ const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true });
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', '*');
-  res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  return next();
-});
+const cors = require('cors');
+
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', '*');
+//   res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
+//   if (req.method === 'OPTIONS') {
+//     return res.sendStatus(200);
+//   }
+//   return next();
+// });
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
