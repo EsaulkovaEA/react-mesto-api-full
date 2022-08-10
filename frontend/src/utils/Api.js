@@ -127,7 +127,7 @@ class Api {
   }
 }
 const api = new Api({
-  url: "https://api.esaulkovaea.nomoredomains.sbs",
+  url: "https://esaulkovaea.nomoredomains.sbs",
   headers: {
     authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const api = new Api({
 });
 
 const auth = new Api({
-  url: "https://api.esaulkovaea.nomoredomains.sbs",
+  url: "https://esaulkovaea.nomoredomains.sbs",
   headers: {
     "Content-Type": "application/json",
   },
