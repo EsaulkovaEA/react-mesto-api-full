@@ -22,14 +22,15 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findOne({ _id: req.params.cardsId })
+  const { cardId } = req.params;
+  Card.findOne(cardId)
     .then((card) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена'));
       }
       if (card.owner.toString() === req.user._id) {
-        return Card.findByIdAndRemove(req.params.cardsId)
-          .then((cardId) => res.send(cardId)).catch(next);
+        return Card.findByIdAndRemove(cardId)
+          .then(() => res.send).catch(next);
       }
       return next(new ForbiddenError('Недостаточно прав'));
     })
