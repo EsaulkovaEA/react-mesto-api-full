@@ -114,7 +114,7 @@ class Api {
       .then(this._checkResponse)
       .then((data) => {
         if (data.token) {
-          localStorage.setItem("jwt", data.token);
+          localStorage.setItem("token", data.token);
           return data;
         }
       });
