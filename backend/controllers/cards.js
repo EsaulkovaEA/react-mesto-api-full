@@ -29,7 +29,7 @@ module.exports.deleteCard = (req, res, next) => {
       }
       if (card.owner.toString() === req.user._id) {
         return Card.findByIdAndRemove(req.params.cardsId)
-          .then((cardId) => res.send({ cardId })).catch(next);
+          .then((cardId) => res.send(cardId)).catch(next);
       }
       return next(new ForbiddenError('Недостаточно прав'));
     })
