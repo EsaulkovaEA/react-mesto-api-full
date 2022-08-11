@@ -11,18 +11,24 @@ class Api {
   }
 
   //получение карточек с сервера
-  getAllCards() {
+  getAllCards(token) {
     return fetch(`${this._url}/cards`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     }).then(this._checkResponse);
   }
 
   //получение информации о пользователе
-  getProfileInfo() {
+  getProfileInfo(token) {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     }).then(this._checkResponse);
   }
 
@@ -90,11 +96,10 @@ class Api {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
-    })
-      .then(this._checkResponse)
-      // .then((res) => {
-      //   return res.data;
-      // })
+    }).then(this._checkResponse);
+    // .then((res) => {
+    //   return res.data;
+    // })
   }
 
   authorize(email, password) {
@@ -112,11 +117,10 @@ class Api {
           localStorage.setItem("jwt", data.token);
           return data;
         }
-      })
+      });
   }
 
   checkToken(jwt) {
-    if (jwt){
     return fetch(`${this._url}/users/me`, {
       method: "GET",
       headers: {
@@ -127,11 +131,11 @@ class Api {
     }).then(this._checkResponse);
   }
 }
-}
+
 const api = new Api({
   url: "https://esaulkovaea.nomoredomains.sbs",
   headers: {
-    authorization: `Bearer ${window.localStorage.getItem("jwt")}`,
+    authorization: `Bearer ${localStorage.getItem("jwt")}`,
     "Content-Type": "application/json",
   },
 });

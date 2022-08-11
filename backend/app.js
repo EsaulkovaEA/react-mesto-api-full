@@ -1,8 +1,9 @@
 const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { errors, celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 const cors = require('cors');
+const { signIn, signUp } = require('./middlewares/validation');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 
@@ -34,21 +35,8 @@ app.get('/crash-test', () => {
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  }),
-}), login);
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(/https?:\/\/\S+/),
-  }),
-}), createUser);
+app.post('/signin', signIn, login);
+app.post('/signup', signUp, createUser);
 
 app.use(errorLogger); // подключаем логгер ошибок
 

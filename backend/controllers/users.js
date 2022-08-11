@@ -59,7 +59,11 @@ module.exports.returnUserId = (req, res, next) => {
 };
 module.exports.updateProfile = (req, res, next) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, { runValidators: true, new: true })
+  User.findByIdAndUpdate(req.user._id, { name, about }, {
+    runValidators: true,
+    new: true,
+    upsert: true,
+  })
     .then((user) => {
       if (!user) {
         return next(new NotFoundError('Пользователь не найден'));
@@ -96,7 +100,7 @@ module.exports.login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       res.send({
-        token: jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' }),
+        token: jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'jwt-secret', { expiresIn: '7d' }),
       });
     })
     .catch((err) => next(err));
