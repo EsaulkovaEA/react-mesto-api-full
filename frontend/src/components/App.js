@@ -45,27 +45,12 @@ function App() {
   useEffect(() => {
     handleTokenCheck();
   },[]);
-  
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     Promise.all([api.getProfileInfo(), api.getAllCards()])
-  //       .then(([userData, cards]) => {
-  //         console.log(userData);
-  //         setCurrentUser(userData);
-  //         setCards(cards);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [loggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
       const token = localStorage.getItem('token');
       Promise.all([api.getProfileInfo(token), api.getAllCards(token)])
         .then(([userData, cards]) => {
-          console.log(userData);
           setCurrentUser(userData);
           setCards(cards);
         })

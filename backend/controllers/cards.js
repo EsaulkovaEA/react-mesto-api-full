@@ -22,14 +22,14 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findById(req.params.cardId)
+  Card.findOne({ _id: req.params.cardsId })
     .then((card) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена'));
       }
       if (card.owner.toString() === req.user._id) {
-        return Card.findByIdAndDelete(req.params.cardId)
-          .then((cardId) => res.send(cardId)).catch(next);
+        return Card.findByIdAndRemove(req.params.cardsId)
+          .then((cardId) => res.send({ cardId })).catch(next);
       }
       return next(new ForbiddenError('Недостаточно прав'));
     })
@@ -51,7 +51,7 @@ module.exports.likeCard = (req, res, next) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена'));
       }
-      return res.send(card);
+      return res.send({ card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -71,7 +71,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (!card) {
         return next(new NotFoundError('Карточка не найдена'));
       }
-      return res.send(card);
+      return res.send({ card });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
