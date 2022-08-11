@@ -120,13 +120,13 @@ class Api {
       });
   }
 
-  checkToken(jwt) {
+  checkToken(token) {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
+        Authorization: `Bearer ${token}`,
       },
     }).then(this._checkResponse);
   }
@@ -135,7 +135,7 @@ class Api {
 const api = new Api({
   url: "https://esaulkovaea.nomoredomains.sbs",
   headers: {
-    authorization: `Bearer ${localStorage.getItem("jwt")}`,
+    authorization: `Bearer ${localStorage.getItem('token')}`,
     "Content-Type": "application/json",
   },
 });

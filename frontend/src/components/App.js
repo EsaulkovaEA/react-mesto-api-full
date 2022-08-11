@@ -165,10 +165,10 @@ function App() {
   }
 
   function handleTokenCheck() {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
+    const token = localStorage.getItem("token");
+    if (token) {
       auth
-        .checkToken(jwt)
+        .checkToken(token)
         .then((res) => {
           setLoggedIn(true);
           setEmail(res.data.email);
