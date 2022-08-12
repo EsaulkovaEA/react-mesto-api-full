@@ -62,7 +62,6 @@ module.exports.updateProfile = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, {
     runValidators: true,
     new: true,
-    upsert: true,
   })
     .then((user) => {
       if (!user) {
