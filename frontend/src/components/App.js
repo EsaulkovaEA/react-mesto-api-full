@@ -42,11 +42,11 @@ function App() {
 
   const history = useHistory();
 
-  // useEffect(() => {
-  //   handleTokenCheck();
-  // },[]);
   useEffect(() => {
     handleTokenCheck();
+  },[]);
+
+  useEffect(() => {
     if (loggedIn) {
       const token = localStorage.getItem('token');
       Promise.all([api.getProfileInfo(token), api.getAllCards(token)])
@@ -59,20 +59,6 @@ function App() {
         });
     }
   }, [loggedIn]);
-  
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     const token = localStorage.getItem('token');
-  //     Promise.all([api.getProfileInfo(token), api.getAllCards(token)])
-  //       .then(([userData, cards]) => {
-  //         setCurrentUser(userData);
-  //         setCards(cards.reverse());
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [loggedIn]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
