@@ -1,5 +1,4 @@
 const { celebrate, Joi } = require('celebrate');
-const RegexUrl = require('../utils/constants');
 
 module.exports.signIn = celebrate({
   body: Joi.object().keys({
@@ -13,6 +12,6 @@ module.exports.signUp = celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(RegexUrl),
+    avatar: Joi.string().regex(/https?:\/\/\S+/),
   }),
 });
