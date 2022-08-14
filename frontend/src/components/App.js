@@ -48,8 +48,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      const token = localStorage.getItem('token');
-      Promise.all([api.getProfileInfo(token), api.getAllCards(token)])
+      Promise.all([api.getProfileInfo(), api.getAllCards()])
         .then(([userData, cards]) => {
           setCurrentUser(userData);
           setCards(cards.reverse());
@@ -150,13 +149,13 @@ function App() {
   }
 
   function handleTokenCheck() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     if (token) {
       auth
         .checkToken(token)
         .then((res) => {
           setLoggedIn(true);
-          setEmail(res.data.email);
+          setEmail(res.email);
           history.push("/");
         })
         .catch((err) => {
@@ -191,6 +190,7 @@ function App() {
           localStorage.setItem("jwt", res.token);
           setLoggedIn(true);
           setEmail(email);
+          handleTokenCheck();
           history.push("/");
         }
       })
@@ -205,8 +205,9 @@ function App() {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
     history.push("/sign-in");
+    setCurrentUser({});
   }
-
+  
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
